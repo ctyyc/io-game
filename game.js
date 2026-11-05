@@ -1,11 +1,11 @@
 (() => {
 'use strict';
-/* MONO SLUG - 흑/백 2색 런앤건. 조작: 방향키 + 스페이스 */
+/* MONO SLUG - 흰 배경 + 검정 2색 런앤건. 조작: 방향키 + 스페이스 */
 const W = 320, H = 180, GROUND = 150, MAXSTAGE = 255;
 const cv = document.getElementById('c');
 const ctx = cv.getContext('2d', { alpha: false });
 ctx.imageSmoothingEnabled = false;
-let FG = '#fff', BG = '#000', pat = null;
+let FG = '#000', BG = '#fff', pat = null;
 
 function resize() {
   const s = Math.max(1, Math.floor(Math.min(innerWidth / W, innerHeight / H)));
@@ -48,9 +48,8 @@ function makePat() {
   c.fillStyle = FG; c.fillRect(0, 0, 1, 1); c.fillRect(1, 1, 1, 1);
   pat = ctx.createPattern(o, 'repeat');
 }
-function setPal(n) {
-  const inv = Math.floor((n - 1) / 5) % 2 === 1;
-  FG = inv ? '#000' : '#fff'; BG = inv ? '#fff' : '#000';
+function setPal() {
+  FG = '#000'; BG = '#fff'; // 배경 흰색, 그 외 모든 구성 검정
   makePat();
 }
 
@@ -627,7 +626,7 @@ function drawTitle() {
   panel(30, 124, 260, 22);
   TC('LEFT RIGHT MOVE   UP JUMP   DOWN CROUCH', 128, 1, FG);
   TC('SPACE FIRE', 137, 1, FG);
-  if ((frame >> 5) % 2 === 0) TC('PRESS SPACE', 158, 2, BG);
+  if ((frame >> 5) % 2 === 0) { panel(96, 155, 128, 20); TC('PRESS SPACE', 160, 2, FG); }
 }
 function drawEnd() {
   camX = Math.round(cam); drawBG();
